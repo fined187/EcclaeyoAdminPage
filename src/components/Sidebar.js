@@ -52,9 +52,9 @@ const Links = styled.ul`
 
 const Line = styled.div`
   position: absolute;
-  width: 200px;
+  width: 180px;
   height: 1px;
-  left: 30px;
+  left: 20px;
   top: 108px;
   background: #EBECEF;
 `;
@@ -72,17 +72,15 @@ function Sidebar() {
               {
                 MenuInfo.map((item, index) => {
                   return (
-                    <>
                       <li key={index}>
                         <Link key={index} className='link' style={{textDecoration: 'none'}} to={item.path}>
                           {item.title}
                         </Link>
+                        <Line />
                       </li>
-                    </>
                   )
                 })
               }
-              <Line />
             </Links>
           </MenuTitle>
         </Content>

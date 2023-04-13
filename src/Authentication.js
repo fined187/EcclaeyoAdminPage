@@ -1,4 +1,4 @@
-import { useEffect, forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 
 const Authentication = forwardRef((props, ref) => {
   const TOKEN = "TOKEN";

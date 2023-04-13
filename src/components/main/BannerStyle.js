@@ -70,6 +70,10 @@ export const WaitingBtn = styled.button`
   &:hover {
     color: green;
   }
+  &.active {
+    color: green;
+
+  }
 `;
 
 export const ApprovedBtn = styled.button`
@@ -92,6 +96,9 @@ export const ApprovedBtn = styled.button`
   &:hover {
     color: green;
   }
+  &.active {
+    color: green;
+  }
 `;
 
 export const DroppedBtn = styled.button`
@@ -112,6 +119,9 @@ export const DroppedBtn = styled.button`
   line-height: 17px;
 
   &:hover {
+    color: green;
+  }
+  &.active {
     color: green;
   }  
 `;
