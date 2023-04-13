@@ -17,7 +17,7 @@ function Login() {
 
 	const userRef = useRef({});
 
-	const { register, handleSubmit, formState, getValues, clearErrors, setError } = useForm({
+	const { register, handleSubmit, getValues, clearErrors, formState } = useForm({
 		mode: "onChange"
 	});
 
@@ -26,11 +26,12 @@ function Login() {
 		localStorage.setItem("adminId", adminId);
 		let result = await login(data);
 		if(result) {
-			userRef.current.logUserIn(result)	;
+			userRef.current.logUserIn(result);
+			window.location.reload();
 		}
 	}
 
-	const clearLoginError = (e) => {
+	const clearLoginError = () => {
 		clearErrors("result");
 	};
 
@@ -47,9 +48,9 @@ function Login() {
 						</div>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<Input {...register("adminId", {required: "Id를 입력해주세요."})} name="adminId" type="text" placeholder="Id를 입력해주세요." hasError={Boolean(formState.errors?.Id?.message)} onChange={clearLoginError}/>
-							<FormError message={formState?.errors?.Id?.message} />
+							<FormError message={formState?.errors?.adminId?.message} />
 							<Input {...register("password", {required: "password is required."})} name="password" type="password" placeholder="Password를 입력해주세요." hasError={Boolean(formState.errors?.Password?.message)} onChange={clearLoginError} />
-							<FormError message={formState?.errors?.Password?.message} />
+							<FormError message={formState?.errors?.password?.message} />
 							<Button type="submit" value="확인"></Button>
 						</form>
 						<SignupBox linkText="계정등록" link={routes.Signup} />

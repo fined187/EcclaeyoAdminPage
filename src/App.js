@@ -1,16 +1,21 @@
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom/cjs/react-router-dom";
 import Login from "./screen/Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GlobalStyles from "./GlobalStyles";
 import routes from "./screen/Routes";
 import Home from "./screen/Home";
 import Signup from "./screen/Signup";
-import Authentication from "./Authentication";
+import Layout from "./components/Layout";
+import Notfound from "./screen/Notfound";
+import PartnerMember from "./screen/members/PartnerMember";
 
 function App() {
-  const [isLoggedInVar, setIsLoggedInVar] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  let loginToken = localStorage.getItem("isLoggedInVar");
+
+  useEffect(() => {
+  }, [loginToken]);
+  
   return (
     <>
       <HelmetProvider>
@@ -19,21 +24,40 @@ function App() {
             <Switch>
               <Route exact path={routes.home}>
                 {
-                  isLoggedIn ? <Home /> : <Login />
+                  loginToken === 'true' ? (
+                    <Layout>
+                      <Home /> 
+                    </Layout>
+                  ) : (
+                  <Login />
+                  )
                 }
               </Route>
               {
-                !isLoggedIn ? (
+                loginToken === 'false' ? (
                   <Route exact path={routes.Signup}>
                     <Signup />
                   </Route>
                 ) : null
               }
+              <Route exact path={routes.Member}>
+                {
+                  loginToken === 'true' ? (
+                    <>
+                      <Layout>
+                        <PartnerMember />
+                      </Layout>
+                    </>
+                  ) : null
+                }
+              </Route>
+              <Route>
+                <Notfound />
+              </Route>
             </Switch>
           </Router>
         </GlobalStyles>
       </HelmetProvider>
-      <Authentication isLoggedInVar={isLoggedInVar} setIsLoggedInVar={setIsLoggedInVar} />
     </>
   );
 }

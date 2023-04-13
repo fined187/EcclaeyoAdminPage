@@ -1,12 +1,11 @@
-import { logUserOut } from "../Authentication";
-import TopBox from "../components/main/NavBox";
-import SLogout from "../components/main/Button";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 function Home() {
 	return(
-		<TopBox username={localStorage.getItem("adminId")}>
-
-		</TopBox>
+		<>
+			home 화면 입니다.
+		</>
 	)
 };
 

@@ -5,18 +5,14 @@ const Authentication = forwardRef((props, ref) => {
   
   const logUserIn = (token) => {
     localStorage.setItem(TOKEN, token);
-    setIsLoggedInVar(true);
+    localStorage.setItem("isLoggedInVar", "true");
   };
   
-  const logUserOut = (TOKEN) => {
+  const logUserOut = () => {
     localStorage.removeItem(TOKEN);
     localStorage.removeItem("adminId");
-    setIsLoggedInVar(false);
+    localStorage.setItem("isLoggedInVar", "false");
   };
-
-  useEffect(() => {
-    setIsLoggedInVar((Boolean(localStorage.getItem(TOKEN))));
-  }, [isLoggedInVar]);
 
   useImperativeHandle(ref, () => ({
     logUserIn,
