@@ -76,6 +76,45 @@ export const WaitingBtn = styled.button`
   }
 `;
 
+export const WaitingBtnLine = styled.div`
+    position: absolute;
+    width: 67px;
+    height: 1px;
+    left: 6px;
+    top: 25px;
+    background-color: green;
+
+  &.notActive {
+    display: none;
+  }
+`;
+
+export const ApproveBtnLine = styled.div`
+    position: absolute;
+    width: 80px;
+    height: 1px;
+    left: 15px;
+    top: 25px;
+    background-color: green;
+
+  &.notActive {
+    display: none;
+  }
+`;
+
+export const DroppedBtnLine = styled.div`
+    position: absolute;
+    width: 70px;
+    height: 1px;
+    left: 6px;
+    top: 25px;
+    background-color: green;
+
+  &.notActive {
+    display: none;
+  }
+`;
+
 export const ApprovedBtn = styled.button`
   position: absolute;
   width: 110px;
@@ -157,7 +196,7 @@ export const SearchTable = styled.div`
   
 `;
 
-export const WaitingBox = styled.div`
+export const ResultBox = styled.div`
   position: absolute;
   width: 2310px;
   height: 530px;
@@ -168,7 +207,7 @@ export const WaitingBox = styled.div`
   border-radius: 10px;
 `;
 
-export const WaitingNumber = styled.span`
+export const ResultNumber = styled.span`
   position: absolute;
   width: 200px;
   height: 22px;
@@ -183,7 +222,7 @@ export const WaitingNumber = styled.span`
   color: #333333;
 `;
 
-export const WatingList = styled.div`
+export const ResultList = styled.div`
   box-sizing: border-box;
 
   position: absolute;
@@ -193,4 +232,8 @@ export const WatingList = styled.div`
   top: 100px;
 
   border: 1px solid #EFF2F8;
+`;
+
+export const ApprovedList = styled.div`
+
 `;

@@ -1,18 +1,3 @@
-export const MenuInfo = [
-  {
-    title: '회원관리',
-    path: '/Member',
-  },
-  {
-    title: '견적관리',
-    path: '/Management',
-  },
-  {
-    title: '정산/수수료 관리',
-    path: '/FeeManagement'
-  }
-];
-
 export const statusMenu = [
   {
     korStatus: "승인대기",
@@ -34,4 +19,19 @@ export const statusMenu = [
     korStatus: "가입거부",
     engStatus: "DENIED"
   }
-]
+];
+
+export const activeMenu = [
+  {
+    korStatus: "활동 가능",
+    engStatus: "ACTIVE",
+  },
+  {
+    korStatus: "활동 정지(30일)",
+    engStatus: "BLOCKED_TEMPORARY",
+  },
+  {
+    korStatus: "활동 정지(무기한)",
+    engStatus: "BLOCKED_LIFETIME",
+  }
+];

@@ -1,44 +1,17 @@
 import { Table } from "react-bootstrap";
 import picture from "../img/picture.png";
-import { useState } from "react";
 import { downloadFile } from "../../api/partner/donwloadAll/DownloadAll";
 import styled from "styled-components";
 import Select from "react-select";
 import { statusMenu } from "../Constants";
 import { ChangeStatus } from "../../api/partner/ChangeStatus";
+import { tableStyles } from "./TableStyles";
 
-function PartnerResult({jsonList}) {
-  const [list, setList] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-
-  const handlePage = (page) => {
-    setPage(page);
-  }
-
-  const tableStyles = {
-    listTitle: {
-      textAlign: "center",
-      width: "170px",
-      background: "#EFF2F8",
-      height: "30px"
-    },
-    listInfo: {
-      width: "100%",
-      textAlign: "center",
-      margin: "10px"
-    },
-    contentListBody: {
-      textAlign: "center",
-      height: "100%",
-      background: "#F8F9FD",
-    }
-  }
-
+function WaitingPartnerResult(props) {
   return (
     <>
       <div>
-        <Table striped border hover size="sm">
+        <Table striped bordered hover size="sm">
           <thead>
             <tr>
               <th style={tableStyles.listTitle}>NO</th>
@@ -59,7 +32,7 @@ function PartnerResult({jsonList}) {
           </thead>
           <tbody style={tableStyles.contentListBody}>
             {
-              (jsonList !== null) ? jsonList?.map((item, i) => {
+              (props.jsonList !== null) ? props.jsonList?.map((item, i) => {
                 return (
                   <GetPartner 
                     key={i}
@@ -101,13 +74,11 @@ function GetPartner(props) {
     {
       id: props.partnerId,
       profileStatus: selectedOption.value,
-      message: "in modification",
+      message: (selectedOption.value === "IN_MODIFICATION" ? "in modification" : null),
     };
     
     let result;
     result = await ChangeStatus(data);
-    // console.log(selectedOption.value);
-    // console.log(props.partnerId);
     console.log(result);
   };
 
@@ -123,7 +94,7 @@ function GetPartner(props) {
   `;
 
   const StyledSelect = styled(Select)`
-    width: 150px;
+    width: 250px;
   `;
 
   return (
@@ -148,4 +119,4 @@ function GetPartner(props) {
   )
 }
 
-export default PartnerResult;
+export default WaitingPartnerResult;

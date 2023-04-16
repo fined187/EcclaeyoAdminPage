@@ -42,7 +42,7 @@ const Icon = styled.span`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 17px;
   color: #FFFFFF;
 `;
@@ -50,12 +50,13 @@ const Icon = styled.span`
 const SButton = styled.input`
   color: #FFFFFF;
   border: none;
-  font-size: 14px;
+  font-size: 18px;
   background-color: #2D3039;
   font-weight: 700;
   font-family: "Inter";
   font-style: normal;
   line-height: 17px;
+  cursor: pointer;
 `;
 
 function Header() {

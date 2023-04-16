@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MenuInfo } from "./Constants";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import routes from "../screen/Routes";
 
 const Container = styled.div`
   height: 300px;
@@ -17,72 +17,116 @@ const ContainerOut = styled.div`
 
 const Content = styled.div`
   width: 200px;
-  height: 190px;
+  height: 200px;
   margin-left: -10px;
   margin-top: 0px;
 `;
 
-const MenuTitle = styled.span`
-  align-items: center;
-  display: flex;
-  color: #FFFFFF;
+const MenuContainer = styled.div`
+  width: 200px;
+  height: 200px;
+  background-color: #404A5C;
 `;
 
-const Links = styled.ul`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  font-family: 'Inter';
+const SidebarItem =styled.div`
+  margin-bottom: 10px;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #FFFFFF;
+  cursor: pointer;
+  
+  font-size: 20px;
+  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
-  font-size: 14px;
   line-height: 17px;
+`;
 
-  li {
-    padding: 15px 1px;
-    opacity: 0.8;
-    font-size: 20px;
-    list-style-type: none;
-  }
-  .link {
-    color: #FFFFFF;
+const Submenu = styled.div`
+  margin-left: 10px;
+`;
+
+const SubMenuItem = styled.div`
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 20px;
+  font-size: 15px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 17px;
+  color: #BDC2CA;
+
+  &.active {
+    background-color: green;
   }
 `;
 
-const Line = styled.div`
+const UnderLine = styled.div`
   position: absolute;
-  width: 180px;
+  margin-top: 10px;
+  width: 170px;
   height: 1px;
-  left: 20px;
-  top: 108px;
-  background: #EBECEF;
+  background-color: #FFFFFF;
+`;
+
+const StyledLink = styled(Link)`
+  color: #BDC2CA;
+  text-decoration-line: none;
+
+  &.active {
+    color: green;
+  }
 `;
 
 function Sidebar() {
-  const [clicked, setClicked] = useState(false);
-  const onClick = () => setClicked(!clicked);
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleToggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const [btnClicked, setBtnClicked] = useState('');
+  const location = useLocation();
 
   return (
     <>
       <Container>
         <Content>
-          <MenuTitle>
-            <Links>
+          <MenuContainer>
+            <SidebarItem onClick={handleToggleMenu}>
+              회원 관리
               {
-                MenuInfo.map((item, index) => {
-                  return (
-                      <li key={index}>
-                        <Link key={index} className='link' style={{textDecoration: 'none'}} to={item.path}>
-                          {item.title}
-                        </Link>
-                        <Line />
-                      </li>
-                  )
-                })
+                showMenu ? "▲" : "▼"
               }
-            </Links>
-          </MenuTitle>
+              <UnderLine />
+            </SidebarItem>
+            {
+              showMenu && (
+                <Submenu>
+                  <SubMenuItem>
+                    <StyledLink className={btnClicked === 'active1' || location.pathname === '/Member/User' ? " active" : null} to={routes.UserMeber} onClick={() => {setBtnClicked('active1')}}>
+                      회원
+                    </StyledLink>
+                  </SubMenuItem>
+                  <SubMenuItem>
+                    <StyledLink className={btnClicked === 'active2' || location.pathname === '/Member/Partner' ? " active" : null} to={routes.PartnerMember} onClick={() => {setBtnClicked('active2')}}>
+                      파트너
+                    </StyledLink>
+                  </SubMenuItem>
+                </Submenu>
+              )
+            }
+            <SidebarItem>
+              견적 관리
+              <UnderLine />
+            </SidebarItem>
+            <SidebarItem>
+              정산/수수료 관리
+              <UnderLine />
+            </SidebarItem>
+          </MenuContainer>
         </Content>
       </Container>
       <ContainerOut />

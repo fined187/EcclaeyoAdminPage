@@ -1,11 +1,11 @@
 import PageTitle from "../../components/PageTitle";
-import Banner from "../../components/main/Banner";
+import CommonBanner from "../../components/main/partner/CommonBanner";
 
 function PartnerMember() {
   return (
-    <Banner>
-      <PageTitle title="Member" />
-    </Banner>
+    <CommonBanner>
+      <PageTitle title="PartnerMember" />
+    </CommonBanner>
   )
 };
 

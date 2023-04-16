@@ -1,6 +1,6 @@
-import baseApiInstance from "./index";
+import baseApiInstance from "./PartnerIndex";
 
-export const PartnerSearch = async(data) => {
+export const ApprovedPartnerSearch = async(data) => {
   try {
     const response = await baseApiInstance.get("/api/admin/waiting-partner/get-all", data);
     return response.data.data;

@@ -40,7 +40,7 @@ function App() {
                   </Route>
                 ) : null
               }
-              <Route exact path={routes.Member}>
+              <Route exact path={routes.PartnerMember}>
                 {
                   loginToken === 'true' ? (
                     <>

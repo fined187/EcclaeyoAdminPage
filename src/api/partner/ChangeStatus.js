@@ -1,13 +1,19 @@
-import baseApiInstance from "."
+import baseApiInstance from "./PartnerIndex"
 
 export const ChangeStatus = async(data) => {
   try {
-    const response = await baseApiInstance.put("/api/admin/waiting-partner/update", data);
-    return response;
-    console.log(response);
+    await baseApiInstance.put("/api/admin/waiting-partner/update", data);
   } catch (error) {
     console.log("ERROR: ", error);
-    throw new Error("ERROR: /api/admin/status");
+    throw new Error("ERROR: /api/admin/waiting-partner/update");
   }
 };
 
+export const ChangeActiveStatus = async(data) => {
+  try {
+    await baseApiInstance.put(`/api/admin/status`, data);
+  } catch (error) {
+    console.log("ERROR: ", error);
+    throw new Error("ERROR: /api/admin/waiting-partner/update");
+  }
+}
