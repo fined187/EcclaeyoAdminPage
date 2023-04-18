@@ -1,42 +1,83 @@
 import { useState } from "react";
+import styled from "styled-components";
 
-function Paging(props) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [data, setData] = useState(props.jsonList);
-  const totalPages = Math.ceil(data?.length / itemsPerPage);
+const PageUl = styled.ul`
+  position: absolute;
+  float: left;
+  list-style: none;
+  text-align: center;
+  border-radius: 3px;
+  color: black;
+  padding: 1px;
+  
+  top: 400px;
+  left: 1100px;
+`;
 
-  const handleClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+const PageLi = styled.li`
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 5px;
+  width: 25px;
+  background-color: #FFFFFF;
+  &:hover {
+    cursor: pointer;
+    background-color: green;
+  }
+  &:focus::after {
+    color: green;
+  }
+`;
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
+const PageSpan = styled.button`
+  padding: 5px 5px;
+  width: 25px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: ${props => props.activeBtn ? 'green' : '#FFFFFF'};
+  color: ${props => props.activeBtn ? '#FFFFFF' : '#333333'};
+  border: none;
+  &:hover {
+    background-color: green;
+  }
+  &:focus::after {
+    border-radius: 100%;
+    color: black;
+    background-color: green;
+  }
+`;
 
-    for(let i = 1; i <= totalPages; i++) {
-      pageNumbers?.push(
-        <li key={i} onClick={() => {handleClick(i)}}>
-          {i}
-        </li>
-      );
-    };
-    return pageNumbers;
-  };
+function Paging({ totalPosts, paginate }) {
+  const [activeBtn, setActiveBtn] = useState(1);
 
-  const renderData = () => {
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentData = data?.slice(indexOfFirstItem, indexOfLastItem);
+  const handleClick = (number) => {
+    setActiveBtn(number);
+  }
+  
 
-    return currentData?.map((item) => <div key={item.id}>{item.name}</div>);
-  };
+  const pageNumbers = [];
+  for(let i = 1; i <= Math.ceil(totalPosts / 5); i++) {
+    pageNumbers.push(i);
+  }
 
-  return (
+  return(
     <div>
-      {renderData()}
-      <ul id="page-numbers">{renderPageNumbers()}</ul>
+      <nav>
+        <PageUl className="pagination" > 
+          {pageNumbers.map((number) => (
+            <PageLi key={number} className="page-item" >
+              <PageSpan activeBtn={activeBtn === number} onClick={() => {paginate(number); handleClick(number)}} className="page-link">
+                {number}
+              </PageSpan>
+            </PageLi>
+          ))}
+        </PageUl>
+      </nav>
     </div>
-  );
-};
+  )
+}
 
 export default Paging;
