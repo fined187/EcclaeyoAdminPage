@@ -7,9 +7,11 @@ import { statusMenu } from "../Constants";
 import { ChangeStatus } from "../../api/partner/ChangeStatus";
 import { tableStyles } from "./TableStyles";
 import moment from "moment";
-import { useState } from "react";
+import Message from "../modal/partner/Message";
+import { useEffect, useState } from "react";
 
 function WaitingPartnerResult(props) {
+
   return (
     <>
       <div>
@@ -61,6 +63,11 @@ function WaitingPartnerResult(props) {
                       moment(item.dateOfRegistration).format('YY.MM.DD' + ' - ' + 'HH:mm')
                     }
                     lastModifiedDate={moment(item.lastModifiedDate).format('YY.MM.DD' + ' - ' + 'HH:mm')}
+                    setOpenModal={props.setOpenModal}
+                    setMsgModal={props.setMsgModal}
+                    Msg={props.Msg}
+                    setStatusData={props.setStatusData}
+                    statusData={props.statusData}
                   />
                 )
               }) : null
@@ -73,9 +80,6 @@ function WaitingPartnerResult(props) {
 };
 
 function GetPartner(props) {
-
-  const [openModal, setOpenModal] = useState(false);
-
   const options = statusMenu;
 
   const dropdownOptions = options.map((option) => {
@@ -83,17 +87,26 @@ function GetPartner(props) {
   });
 
   const handleSelectChange = async(selectedOption) => {
-    let data = 
-    {
-      id: props.partnerId,
-      profileStatus: selectedOption.value,
-      message: (selectedOption.value === "IN_MODIFICATION" ? "in modification" : null),
-    };
-    
-    let result;
-    result = await ChangeStatus(data);
-    console.log(result);
+      if(selectedOption?.value === "IN_MODIFICATION") {
+        props.setMsgModal(true);
+        props.setStatusData((prevState) => {
+          return {
+            ...prevState,
+            id: props.partnerId,
+            profileStatus: selectedOption.value,
+          }
+        });
+      } else {
+        let data = {
+          id: props.partnerId,
+          profileStatus: selectedOption.value,
+          message: null
+        }
+        let result;
+        result = await ChangeStatus(data);
+      }
   };
+
 
   const ButtonZip = styled.button`
     color: black;
@@ -108,8 +121,22 @@ function GetPartner(props) {
   `;
 
   const StyledSelect = styled(Select)`
-    width: 220px;
+    width: 160px;
+    cursor: pointer;
   `;
+
+  const handleModal = () => {
+    props.setOpenModal(true);
+  };
+
+  const getPartnerId = (data) => {
+    if(localStorage.getItem("partnerId") === '') {
+      localStorage.setItem("partnerId", data);
+    } else {
+      localStorage.removeItem("partnerId");
+      localStorage.setItem("partnerId", data);
+    }
+  }
 
   return (
     <tr>
@@ -118,7 +145,7 @@ function GetPartner(props) {
         <StyledSelect options={dropdownOptions} defaultValue={props.status} placeholder={props.status} onChange={handleSelectChange} />
       </td>
       <td>
-        <a style={{cursor: "pointer", textDecorationLine:"underline", color: "blue"}}>
+        <a style={{cursor: "pointer", textDecorationLine:"underline", color: "blue"}} onClick={() => {handleModal(); getPartnerId(props.partnerId);}} >
           {props.partnerId}
         </a>
       </td>
